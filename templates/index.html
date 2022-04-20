@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>init.</h1>
 
-    {% for row in rows %}
-        <p>{{row}} </p>
+<p>Start!</p>
+<ul>
+    {% for comment in comments %}
+    <li>{{ comment }}</li>
     {% endfor %}
+</ul>
+<p>Finish!</p>
 
 {% endblock %}

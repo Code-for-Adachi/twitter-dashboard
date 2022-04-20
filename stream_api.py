@@ -11,7 +11,6 @@ class TweetPrinterV2(tweepy.StreamingClient):
     def on_tweet(self, tweet):
         print(f"{tweet.id} {tweet.created_at} ({tweet.author_id}): {tweet.text}")
         print("-"*50)
-        return(f"{tweet.id} {tweet.created_at} ({tweet.author_id}): {tweet.text}")
 
 #printer = TweetPrinterV2(os.getenv('TWITTER_API_BEARER_TOKEN'))
 #
