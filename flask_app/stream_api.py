@@ -12,9 +12,10 @@ class TweetPrinterV2(tweepy.StreamingClient):
         print(f"{tweet.id} {tweet.created_at} ({tweet.author_id}): {tweet.text}")
         print("-"*50)
 
-#printer = TweetPrinterV2(os.getenv('TWITTER_API_BEARER_TOKEN'))
-#
-## add new rules
-#rule = tweepy.StreamRule(value="足立区")
-#printer.add_rules(rule)
-#printer.filter()
+def get_stream(word):
+    printer = TweetPrinterV2(os.getenv('TWITTER_API_BEARER_TOKEN'))
+
+    # add new rules
+    rule = tweepy.StreamRule(value=word)
+    printer.add_rules(rule)
+    printer.filter()

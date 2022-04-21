@@ -1,0 +1,11 @@
+version: '3'
+services:
+  flask_app:
+    build: ./
+    user: root
+    volumes:
+      - ./flask_app:/flask_app
+    working_dir: /flask_app
+    ports:
+      - "5000:5000"
+    command: python app.py
