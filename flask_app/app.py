@@ -1,13 +1,16 @@
 # coding: utf-8
-from flask import Flask, Response, render_template, stream_with_context, request
+from flask import Flask, Response, render_template
 import time
-import stream_api
 
 app = Flask(__name__)
 
-#@app.route('/')
-#def index():
-#    return render_template('index.html')
+@app.route('/')
+def index():
+    def generate():
+        for comment in ["https://twitter.com/0f04ibFRe3hd9cE/status/1517357824040652801", "https://twitter.com/salmonpink778/status/1517358229520408578"]:
+            yield comment
+            time.sleep(5)  # 動作をわかりやすくするために追加
+    return Response(generate())
 
 def stream_template(template_name, **context):
     app.update_template_context(context)
@@ -18,9 +21,9 @@ def stream_template(template_name, **context):
         yield buffer
         time.sleep(0.5)
 
-@app.route('/')
+@app.route('/hello-world-with-template')
 def hello_world_with_template():
-    comments = ['Count: {}'.format(i) for i in range(20)]
+    comments = ["https://twitter.com/0f04ibFRe3hd9cE/status/1517357824040652801", "https://twitter.com/salmonpink778/status/1517358229520408578"]
     return Response(stream_template('index.html', comments=comments))
 
 if __name__ == "__main__":
