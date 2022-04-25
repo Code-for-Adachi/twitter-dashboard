@@ -14,7 +14,7 @@ class TweetPrinterV2(tweepy.StreamingClient):
         tw = api.get_tweet(id=tweet.id, expansions=["author_id"], user_fields=["username"])
         url = "https://twitter.com/" + tw.includes["users"][0].username + "/status/" + str(tweet.id)
         print(url)
-        print("-"*50)
+        return url
 
     #def on_data(self, raw_data):
     #    print(raw_data)
@@ -28,4 +28,4 @@ def get_stream(word):
     printer.add_rules(rule)
     printer.filter()
 
-get_stream('足立区')
+#get_stream('足立区')

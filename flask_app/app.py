@@ -1,30 +1,40 @@
 # coding: utf-8
+import os
+from datetime import timedelta
+import threading
 from flask import Flask, Response, render_template
-import time
+from dotenv import load_dotenv
+import tweepy
 
+load_dotenv(override=True)
+api = tweepy.Client(os.getenv('TWITTER_API_BEARER_TOKEN'))
 app = Flask(__name__)
+
+class TweetPrinterV2(tweepy.StreamingClient):
+    def on_tweet(self, tweet):
+        #print(f"{tweet.id} {tweet.created_at} ({tweet.author_id}): {tweet.text}")
+        list = []
+        list.append(f"{tweet.id} {tweet.created_at} ({tweet.author_id}): {tweet.text}")
+        #print(api.get_tweet(id=tweet.id, expansions=["author_id"], user_fields=["username"]))
+        #tw = api.get_tweet(id=tweet.id, expansions=["author_id"], user_fields=["username"])
+        #url = "https://twitter.com/" + tw.includes["users"][0].username + "/status/" + str(tweet.id)
+        #return url
+        return list
 
 @app.route('/')
 def index():
-    def generate():
-        for comment in ["https://twitter.com/0f04ibFRe3hd9cE/status/1517357824040652801", "https://twitter.com/salmonpink778/status/1517358229520408578"]:
-            yield comment
-            time.sleep(5)  # 動作をわかりやすくするために追加
-    return Response(generate())
+    t = Thread()
+    t.start()
+    return render_template('index.html')
 
-def stream_template(template_name, **context):
-    app.update_template_context(context)
-    t = app.jinja_env.get_template(template_name)
-    rv = t.stream(context)
-    rv.enable_buffering(5)
-    for buffer in rv:
-        yield buffer
-        time.sleep(0.5)
+@app.route('/data')
+def get_stream():
+    printer = TweetPrinterV2(os.getenv('TWITTER_API_BEARER_TOKEN'))
 
-@app.route('/hello-world-with-template')
-def hello_world_with_template():
-    comments = ["https://twitter.com/0f04ibFRe3hd9cE/status/1517357824040652801", "https://twitter.com/salmonpink778/status/1517358229520408578"]
-    return Response(stream_template('index.html', comments=comments))
+    # add new rules
+    rule = tweepy.StreamRule(value="足立区")
+    printer.add_rules(rule)
+    printer.filter()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", threaded=True, port=5000, debug=True)
