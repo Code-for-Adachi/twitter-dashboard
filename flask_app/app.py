@@ -23,7 +23,7 @@ class TweetPrinterV2(tweepy.StreamingClient):
 
 @app.route('/')
 def index():
-    t = Thread()
+    t = threading.Thread()
     t.start()
     return render_template('index.html')
 
