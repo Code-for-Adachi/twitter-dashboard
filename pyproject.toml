@@ -11,6 +11,7 @@ Flask = "^2.1.1"
 tweepy = "^4.8.0"
 DateTime = "^4.4"
 python-dotenv = "^0.20.0"
+redis = "^4.2.2"
 
 [tool.poetry.dev-dependencies]
 
