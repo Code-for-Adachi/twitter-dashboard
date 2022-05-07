@@ -1,31 +1,45 @@
 # coding: utf-8
 import os
+import json
 from dotenv import load_dotenv
 import tweepy
-from datetime import timedelta
+import datetime
+from textblob import TextBlob
+from tweet_store import TweetStore
+
 
 load_dotenv(override=True)
 api = tweepy.Client(os.getenv('TWITTER_API_BEARER_TOKEN'))
+store = TweetStore()
 
 class TweetPrinterV2(tweepy.StreamingClient):
-    def on_tweet(self, tweet):
-        #print(f"{tweet.id} {tweet.created_at} ({tweet.author_id}): {tweet.text}")
-        print(api.get_tweet(id=tweet.id, expansions=["author_id"], user_fields=["username"]))
-        tw = api.get_tweet(id=tweet.id, expansions=["author_id"], user_fields=["username"])
-        url = "https://twitter.com/" + tw.includes["users"][0].username + "/status/" + str(tweet.id)
-        print(url)
-        return url
+    def on_status(self, status):
 
-    #def on_data(self, raw_data):
-    #    print(raw_data)
-    #    print("-"*50)
+        if ('RT @' not in status.text):
+            blob = TextBlob(status.text)
+            sent = blob.sentiment
+            polarity = sent.polarity
+            subjectivity = sent.subjectivity
 
-def get_stream(word):
-    printer = TweetPrinterV2(os.getenv('TWITTER_API_BEARER_TOKEN'))
+            tweet_item = {
+                'id_str': status.id_str,
+                'text': status.text,
+                'polarity': polarity,
+                'subjectivity': subjectivity,
+                'username': status.user.screen_name,
+                'name': status.user.name,
+                'profile_image_url': status.user.profile_image_url,
+                'received_at': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
 
-    # add new rules
-    rule = tweepy.StreamRule(value=word)
-    printer.add_rules(rule)
-    printer.filter()
+            store.push(tweet_item)
+            print("Pushed to redis:", tweet_item)
 
-#get_stream('足立区')
+    def on_error(self, status_code):
+        if status_code == 420:
+            return False
+
+printer = TweetPrinterV2(os.getenv('TWITTER_API_BEARER_TOKEN'))
+rule = tweepy.StreamRule(value='足立区')
+printer.add_rules(rule)
+printer.filter()

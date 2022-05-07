@@ -9,3 +9,7 @@ services:
     ports:
       - "5000:5000"
     command: python app.py
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
