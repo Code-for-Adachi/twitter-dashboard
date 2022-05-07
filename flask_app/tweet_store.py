@@ -5,7 +5,8 @@ from tweet import Tweet
 class TweetStore:
 
     # Redis Configuration
-    redis_host = "localhost"
+    #redis_host = "localhost"
+    redis_host = "redis"
     redis_port = 6379
     redis_password = ""
 
