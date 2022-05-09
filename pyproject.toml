@@ -12,6 +12,7 @@ tweepy = "^4.8.0"
 DateTime = "^4.4"
 python-dotenv = "^0.20.0"
 redis = "^4.2.2"
+textblob = "^0.17.1"
 
 [tool.poetry.dev-dependencies]
 
