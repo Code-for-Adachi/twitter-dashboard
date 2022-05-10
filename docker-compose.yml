@@ -9,6 +9,13 @@ services:
     ports:
       - "5000:5000"
     command: python app.py
+  stream_app:
+    build: ./
+    user: root
+    volumes:
+      - ./flask_app:/flask_app
+    working_dir: /flask_app
+    command: python stream_api.py
   redis:
     image: "redis:latest"
     ports:

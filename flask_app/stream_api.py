@@ -13,7 +13,7 @@ api = tweepy.Client(os.getenv('TWITTER_API_BEARER_TOKEN'))
 store = TweetStore()
 
 class TweetPrinterV2(tweepy.StreamingClient):
-    def on_status(self, status):
+    def on_tweet(self, status):
 
         if ('RT @' not in status.text):
             blob = TextBlob(status.text)
@@ -22,13 +22,13 @@ class TweetPrinterV2(tweepy.StreamingClient):
             subjectivity = sent.subjectivity
 
             tweet_item = {
-                'id_str': status.id_str,
+                #'id_str': status.id_str,
                 'text': status.text,
                 'polarity': polarity,
                 'subjectivity': subjectivity,
-                'username': status.user.screen_name,
-                'name': status.user.name,
-                'profile_image_url': status.user.profile_image_url,
+                #'username': status.user.screen_name,
+                #'name': status.user.name,
+                #'profile_image_url': status.user.profile_image_url,
                 'received_at': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
 
