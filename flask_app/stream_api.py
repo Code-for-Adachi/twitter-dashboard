@@ -11,9 +11,12 @@ from tweet_store import TweetStore
 load_dotenv(override=True)
 api = tweepy.Client(os.getenv('TWITTER_API_BEARER_TOKEN'))
 store = TweetStore()
+client = tweepy.Client(bearer_token=os.getenv('TWITTER_API_BEARER_TOKEN'))
 
 class TweetPrinterV2(tweepy.StreamingClient):
     def on_tweet(self, status):
+
+        user_field = client.get_tweet(status.id_str, user_fields=['id', 'name', 'username', 'profile_image_url'])
 
         if ('RT @' not in status.text):
             blob = TextBlob(status.text)
