@@ -9,14 +9,14 @@ from tweet_store import TweetStore
 
 
 load_dotenv(override=True)
-api = tweepy.Client(os.getenv('TWITTER_API_BEARER_TOKEN'))
 store = TweetStore()
 client = tweepy.Client(bearer_token=os.getenv('TWITTER_API_BEARER_TOKEN'))
 
 class TweetPrinterV2(tweepy.StreamingClient):
     def on_tweet(self, status):
 
-        user_field = client.get_tweet(status.id_str, user_fields=['id', 'name', 'username', 'profile_image_url'])
+        user_field = client.get_tweet(id=status.id, user_fields=['id', 'name', 'username', 'profile_image_url'])
+        print(user_field.data)
 
         if ('RT @' not in status.text):
             blob = TextBlob(status.text)
@@ -25,13 +25,13 @@ class TweetPrinterV2(tweepy.StreamingClient):
             subjectivity = sent.subjectivity
 
             tweet_item = {
-                #'id_str': status.id_str,
+                'id_str': user_field.data['id'],
                 'text': status.text,
                 'polarity': polarity,
                 'subjectivity': subjectivity,
-                #'username': status.user.screen_name,
-                #'name': status.user.name,
-                #'profile_image_url': status.user.profile_image_url,
+                'username': user_field.data['username'],
+                'name': user_field.data['name'],
+                'profile_image_url': user_field.data['profile_image_url'],
                 'received_at': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
 
