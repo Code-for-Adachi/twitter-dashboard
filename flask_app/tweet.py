@@ -6,8 +6,7 @@ class Tweet:
         self.data = data
 
     def user_link(self):
-        #return "http://twitter.com/{}".format(self.data['username'])
-        return "hoge"
+        return "http://twitter.com/{}".format(self.data['username'])
 
     def filtered_text(self):
         return self.filter_brands(self.filter_urls(self.data['text']))
