@@ -26,3 +26,13 @@ img {
 .negative {
     border: 1px solid rgba(164, 0, 0, .8)
 }
+
+.tw-box {
+    float: right;
+    padding: 20px;
+}
+
+.container {
+    float: left;
+    padding: 20px;
+}
