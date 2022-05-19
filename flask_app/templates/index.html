@@ -36,33 +36,37 @@
             <a class="btn btn-primary" href="/" role="button">Refresh</a>
         </div>
 
-        {% for tweet in tweets %}
-        <div class="row my-4">
-            <div class="col">
-                <div
-                    class="card {{ 'positive' if tweet.data.polarity > 0 }} {{ 'negative' if tweet.data.polarity < 0 }}">
-                    <div class="card-body">
-                        <p class="card-text">
-                            {{ tweet.filtered_text()|safe }}
-                        </p>
-                        <br />
-                        <div class="card-text">
-                            <img alt="{{ tweet.data.username }}" height="48" src="{{ tweet.data.profile_image_url }}"
-                                width="48" class="mr-3" />
-                            {{ tweet.data.name }} (<a href="{{ tweet.user_link() }}" target="_blank">{{
-                                tweet.data.username }}</a>)
+        <div id="tw-contents">
+
+            {% for tweet in tweets %}
+            <div class="row my-4">
+                <div class="col">
+                    <div
+                        class="card {{ 'positive' if tweet.data.polarity > 0 }} {{ 'negative' if tweet.data.polarity < 0 }}">
+                        <div class="card-body">
+                            <p class="card-text">
+                                {{ tweet.filtered_text()|safe }}
+                            </p>
+                            <br />
+                            <div class="card-text">
+                                <img alt="{{ tweet.data.username }}" height="48" src="{{ tweet.data.profile_image_url }}"
+                                    width="48" class="mr-3" />
+                                {{ tweet.data.name }} (<a href="{{ tweet.user_link() }}" target="_blank">{{
+                                    tweet.data.username }}</a>)
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
+
+            <div class="tw-box">
+                <a class="twitter-timeline" href="https://twitter.com/adachi_city?ref_src=twsrc%5Etfw">Tweets by adachi_city</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+
         </div>
-        {% endfor %}
 
-    </div>
-
-    <div class="tw-box">
-        <a class="twitter-timeline" href="https://twitter.com/adachi_city?ref_src=twsrc%5Etfw">Tweets by adachi_city</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
 
 </body>

@@ -27,13 +27,7 @@ img {
     border: 1px solid rgba(164, 0, 0, .8)
 }
 
-.container {
-    float: left;
-    padding: 20px;
-}
-
-.tw-box {
-    float: left;
-    padding: 20px;
+#tw-contents {
+   display: flex;
 }
 
