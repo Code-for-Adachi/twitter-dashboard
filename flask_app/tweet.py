@@ -1,7 +1,6 @@
 import re
 
 class Tweet:
-
     def __init__(self, data):
         self.data = data
 
@@ -12,14 +11,12 @@ class Tweet:
         return self.filter_brands(self.filter_urls(self.data['text']))
 
     def filter_brands(self, text):
-        brands = ["@WarbyParker", "@Bonobos", "@Casper", "@Glossier", "@DollarShaveClub", "@Allbirds"]
-
+        brands = []
         for brand in brands:
             if (brand in text):
                 text = text.replace(brand, "<mark>{}</mark>".format(brand))
             else:
                 continue
-
         return text
 
     def filter_urls(self, text):

@@ -7,8 +7,10 @@ services:
       - ./flask_app:/flask_app
     working_dir: /flask_app
     ports:
-      - "5000:5000"
+      - "8000:8000"
     command: python app.py
+    environment:
+        SEARCH_STRINGS: "${SEARCH_STRINGS}"
   stream_app:
     build: ./
     user: root
@@ -16,6 +18,9 @@ services:
       - ./flask_app:/flask_app
     working_dir: /flask_app
     command: python stream_api.py
+    environment:
+        TWITTER_API_BEARER_TOKEN: "${TWITTER_API_BEARER_TOKEN}"
+        SEARCH_STRINGS: "${SEARCH_STRINGS}"
   redis:
     image: "redis:latest"
     ports:

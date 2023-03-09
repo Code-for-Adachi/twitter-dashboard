@@ -1,0 +1,33 @@
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="tw-contents">  
+      {% for tweet in tweets %}
+        <div class="tw-content">
+          <hr>
+          <p class="card-text">
+            {{ tweet.filtered_text()|safe }}
+          </p>
+          <br>
+          <img alt="{{ tweet.data.username }}" height="48" src="{{ tweet.data.profile_image_url }}" width="48" class="mr-3" />
+          {{ tweet.data.name }} (<a href="{{ tweet.user_link() }}" target="_blank">{{ tweet.data.username }}</a>)
+        </div>
+      {% endfor %}  
+    </div>
+  </div> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    var fn = function() {
+    	$.ajax({
+    	  type: 'get',
+    	  url: "tweets",
+    	  success: function(result){
+    	  	document.getElementById('tw-contents').innerHTML = result;
+    	  }
+      });
+    	setTimeout(fn,1000*5);
+    };
+    fn();
+  </script>
+</body>

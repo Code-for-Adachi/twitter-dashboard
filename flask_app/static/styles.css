@@ -1,33 +1,105 @@
+@charset "utf-8";
+/*
+=======================================
+  Reset CSS
+=======================================
+*/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, main, menu, nav, section, summary,
+time, mark, audio, video{
+  margin:0;
+  padding:0;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,main,menu,nav,section{
+  display:block;
+}
+
+html{
+  -webkit-text-size-adjust: 100%;
+}
+
+body{
+  color: #59220d;
+  line-height: 1.5;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+img{
+  border: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+ul,ol{
+  list-style-type: none;
+}
+
+table {
+  border-collapse: collapse; 
+  border-spacing: 0;
+}
+
+img, input, select, textarea { 
+  vertical-align: middle;
+}
+
+a {
+  color: #59220d;
+  transition: 0.5s;
+}
+a:hover {
+  color: #d53e04;
+}
+a:hover img {
+  opacity: 0.7;
+}
+
+/*
+main design
+*/
 body {
-    margin-top: 50px;
+  width: 100%;
+  max-width: 960px;
+  margin: auto;
 }
 
-img {
-    border-radius: 50%;
+h1 {
+  margin: 40px;
+  padding: 30px;
+  border: 5px solid green;
+  background-color: royalblue;
+  color: #fff;
+  font-size: 100%;
+  text-align: center;
 }
 
-.lrg-heading {
-    font-size: 48px;
+h2 {
+  margin: 10px;
+  color: royalblue;
 }
 
-.description {
-    font-size: 24px;
-    color: gray;
+@media screen and (min-width:768px) {
+  h1 {
+    font-size: 300%;
+  }
 }
 
-.brand {
-    color: yellow;
+/*
+twitter contents
+*/
+.tw-contents {
+  width: 60%;
+  margin: auto;
 }
-
-.positive {
-    border: 1px solid rgba(0, 164, 0, .8)
-}
-
-.negative {
-    border: 1px solid rgba(164, 0, 0, .8)
-}
-
-#tw-contents {
-   display: flex;
-}
-

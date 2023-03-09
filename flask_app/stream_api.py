@@ -1,14 +1,10 @@
 # coding: utf-8
 import os
-import json
-from dotenv import load_dotenv
 import tweepy
 import datetime
 from textblob import TextBlob
 from tweet_store import TweetStore
 
-
-load_dotenv(override=True)
 store = TweetStore()
 client = tweepy.Client(bearer_token=os.getenv('TWITTER_API_BEARER_TOKEN'))
 
@@ -38,7 +34,7 @@ class TweetPrinterV2(tweepy.StreamingClient):
         if status_code == 420:
             return False
 
-printer = TweetPrinterV2(os.getenv('TWITTER_API_BEARER_TOKEN'))
-rule = tweepy.StreamRule(value='足立区')
+printer = TweetPrinterV2(bearer_token=os.getenv('TWITTER_API_BEARER_TOKEN'))
+rule = tweepy.StreamRule(value=os.getenv('SEARCH_STRINGS'))
 printer.add_rules(rule)
 printer.filter()

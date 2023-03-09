@@ -1,74 +1,24 @@
 <!doctype html>
-<html lang="en">
-
-<head>
+<html lang="ja">
+  <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <meta name="keywords" content="{{ search_strigns }}, ツイッター, ストリーミング">
+    <meta name="description" content="{{ search_strigns }}が含まれたツイートを表示しています">  
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
-    <title>DTC-Twitter Filter</title>
-</head>
-
-<body>
-    <div class="container">
-
-        <div class="row mb-5">
-            <div class="col text-center">
-                <h1 class="mb-3">
-                    足立区に関するツイッター ストリーミング
-                </h1>
-                <h4 class="mb-2">
-                    <small class="text-muted">
-                        "足立区" が含まれたツイートを表示しています
-                    </small>
-                </h4>
-            </div>
-        </div>
-
-        <div class="text-center mb-4">
-            <a class="btn btn-primary" href="/" role="button">Refresh</a>
-        </div>
-
-        <div id="tw-contents">
-
-            {% for tweet in tweets %}
-            <div class="row my-4">
-                <div class="col">
-                    <div
-                        class="card {{ 'positive' if tweet.data.polarity > 0 }} {{ 'negative' if tweet.data.polarity < 0 }}">
-                        <div class="card-body">
-                            <p class="card-text">
-                                {{ tweet.filtered_text()|safe }}
-                            </p>
-                            <br />
-                            <div class="card-text">
-                                <img alt="{{ tweet.data.username }}" height="48" src="{{ tweet.data.profile_image_url }}"
-                                    width="48" class="mr-3" />
-                                {{ tweet.data.name }} (<a href="{{ tweet.user_link() }}" target="_blank">{{
-                                    tweet.data.username }}</a>)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-
-            <div class="tw-box">
-                <a class="twitter-timeline" href="https://twitter.com/adachi_city?ref_src=twsrc%5Etfw">Tweets by adachi_city</a>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            </div>
-
-        </div>
-
-    </div>
-
-</body>
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">  
+    <title>{{ search_strigns }}のツイッター ストリーミング</title>
+  </head>
+  <body>
+    <h1>
+      {{ search_strigns }} のツイッターストリーミング
+    </h1>
+    <h2>
+      <small class="text-muted">
+        "{{ search_strigns }}" が含まれたツイートを表示しています。5秒毎に自動更新します。
+      </small>
+    </h2>  
+    <iframe width="100%" height="800px" frameborder="0" src="{{ url_for('show_tweets') }}"></iframe>
+  </body>
 </html>
